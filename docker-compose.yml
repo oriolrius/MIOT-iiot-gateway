@@ -46,6 +46,7 @@ services:
       INFLUXDB_DATA_DIR: /data
     volumes:
       - 'influx-data:/data'
+    network_mode: host
     links:
       - node-red
       - grafana
