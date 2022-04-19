@@ -62,7 +62,8 @@ services:
     ports:
       - '1883:1883'
     restart: unless-stopped
-    volumes:
-      - /mnt/data/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    network: host
+    #volumes:
+    #  - /mnt/data/mqtt/mosquitto.conf:/mosquitto/config/mosquitto.conf
     links:
       - node-red
