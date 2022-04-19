@@ -25,18 +25,10 @@ services:
       - '/dev/mem:/dev/mem'
       - '/dev/gpiomem:/dev/gpiomem'
       - '/dev/i2c-1:/dev/i2c-1'
-    ports:
-      - '80:80'
-    links:
-      - influxdb
-      - grafana
-      - mqtt
   influxdb:
     image: 'influxdb:1.8.0'
     container_name: influxdb
     restart: always
-    expose:
-      - 8086
     environment:
       INFLUXDB_DB: balena
       INFLUXDB_USER: iiot
@@ -47,23 +39,13 @@ services:
     volumes:
       - 'influx-data:/data'
     network_mode: host
-    links:
-      - node-red
-      - grafana
   grafana:
     image: 'balenablocks/dashboard:amd64-1.1.4'
     restart: always
-    ports:
-      - '8080:8080'
+    network_host: host
     volumes:
       - 'dashboard:/data'
-    links:
-      - influxdb
   mqtt:
     image: eclipse-mosquitto
-    ports:
-      - 1883:1883
     restart: unless-stopped
     network_mode: host
-    links:
-      - node-red
