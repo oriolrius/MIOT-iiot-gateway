@@ -28,6 +28,8 @@ services:
       - "/dev/i2c-1:/dev/i2c-1"
     ports:
       - 80:80
+    networks:
+      - miot
  
   influxdb:
     image: influxdb:1.8.0
@@ -44,6 +46,8 @@ services:
       INFLUXDB_DATA_DIR: /data
     volumes:
       - influx-data:/data
+    networks:
+      - miot
   
   dashboard:
     image: balenablocks/dashboard
@@ -52,6 +56,8 @@ services:
       - "8080:8080"
     volumes:
       - 'dashboard:/data'
+    networks:
+          - miot
 
   mqtt:
     #image: arm32v6/eclipse-mosquitto
@@ -60,3 +66,10 @@ services:
     ports:
       - "1883:1883"
     restart: always
+    networks:
+      - miot
+
+networks:
+ miot:
+ external:
+ name: miot
