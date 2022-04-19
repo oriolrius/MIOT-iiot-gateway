@@ -12,6 +12,8 @@ services:
     restart: always
     privileged: true
     network_mode: host
+    ports:
+     - 1880:1880
     labels:
       io.balena.features.supervisor-api: '1'
       io.balena.features.balena-api: '1'
@@ -39,6 +41,9 @@ services:
     image: 'balenablocks/dashboard:amd64-1.1.4'
     restart: unless-stopped
     network_mode: host
+    ports:
+     - 3000:3000
+     - 8080:3000
     volumes:
       - 'dashboard:/data'
   mqtt:
